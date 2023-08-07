@@ -20,3 +20,46 @@ $categories = DB::table('categories as a')
 {{  $var === "hello" ? "Hi" : ($var ==="howdie ? "how" : "Goodbye") }}
 
 
+
+/// laravel like search ///
+
+$categories->where('a.name','like','%'.$request->keyword.'%');
+
+
+/// laravel check request method///
+
+if ($request->method() == 'POST') 
+{
+
+}
+
+/// laravel validation error ///
+
+$errors->all()
+
+
+/// laravel elequent update ///
+
+use App\Models\Flight;
+ 
+$flight = Flight::find(1);
+ 
+$flight->name = 'Paris to London';
+ 
+$flight->save();
+
+/// laravel db update ///
+
+$affected = DB::table('users')
+              ->where('id', 1)
+              ->update(['votes' => 1]);
+
+/// laravel insert or update ///
+
+DB::table('users')
+    ->updateOrInsert(
+        ['email' => 'john@example.com', 'name' => 'John'],
+        ['votes' => '2']
+    );
+
+                  
