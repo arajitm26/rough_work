@@ -19,6 +19,9 @@ $categories = DB::table('categories as a')
 
 {{  $var === "hello" ? "Hi" : ($var ==="howdie ? "how" : "Goodbye") }}
 
+/// php if else shorthand///
+
+echo empty($address['street2']) ? 'empty' : 'not empty';
 
 
 /// laravel like search ///
@@ -32,10 +35,6 @@ if ($request->method() == 'POST')
 {
 
 }
-
-/// laravel validation error ///
-
-$errors->all()
 
 
 /// laravel elequent update ///
@@ -61,5 +60,101 @@ DB::table('users')
         ['email' => 'john@example.com', 'name' => 'John'],
         ['votes' => '2']
     );
+
+
+///laravel insert db///
+DB::table('users')->insert([
+    'email' => 'kayla@example.com',
+    'votes' => 0
+]);
+
+$flight = new Flight;
+ 
+$flight->name = $request->name;
+
+$flight->save();
+
+
+
+///laravel delete ///
+Category::find($id)->delete();
+$deleted = DB::table('users')->where('id', 100)->delete();    
+
+/// laravel validation ///
+
+         $request->validate([
+                'cat_name' => 'required|max:255',
+                'parent_cat' => 'nullable|integer',
+                'iamge_file' => 'nullable|mimes:png,jpeg,jpg|max:2048',
+            ],
+            [],
+            [
+               'cat_name' => "category name",
+               'iamge_file' => "Image"
+            ]);
+
+
+$validator = Validator::make($data, [
+    'toppings' => [
+        'required',
+        Rule::notIn(['sprinkles', 'cherries']),
+    ],
+]);
+
+
+
+if (!$validator->fails())
+{
+    
+}
+
+/// laravel validation error ///
+
+$errors->all()
+
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+$validator->errors()->first()
+
+
+/// laravel file upload ///
+
+$file_name = NULL;
+
+if(isset($request->iamge_file))
+{
+  $file_name = time().'.'.$request->iamge_file->extension(); 
+  $request->iamge_file->move(public_path('uploads'), $file_name);
+
+}
+
+/// laravel file upload to storage///
+$path = $request->file('iamge_file')->store('public');
+$file_name = $request->iamge_file->hashName(); 
+ 
+return $path;
+
+$file_name = time().'.'.$request->iamge_file->extension(); 
+$path = $request->file('iamge_file')->storeAs('public',$file_name);
+
+/// laravel get storage path///
+<img src="{{asset('storage/uploads/cat_image/'.$category->image)}}" height="20" width="20">
+
+
+
+
+
+
+
+
 
                   
