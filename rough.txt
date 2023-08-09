@@ -7,6 +7,7 @@ SELECT a.id as id,a.name as categories,b.name as parent_cat FROM categories a LE
 $categories = DB::table('categories as a')
                           ->select('a.id as id','a.image as image','a.name as name','b.name as parent_cat')
                           ->leftjoin('categories as b','a.parent_id', '=', 'b.id')
+                          ->orderBy('id', 'DESC')
                           ->paginate(10);
 
 
@@ -83,7 +84,7 @@ $deleted = DB::table('users')->where('id', 100)->delete();
 /// laravel validation ///
 
          $request->validate([
-                'cat_name' => 'required|max:255',
+                'cat_name' => 'required|unique:categories|max:255',
                 'parent_cat' => 'nullable|integer',
                 'iamge_file' => 'nullable|mimes:png,jpeg,jpg|max:2048',
             ],
@@ -150,9 +151,47 @@ $path = $request->file('iamge_file')->storeAs('public',$file_name);
 <img src="{{asset('storage/uploads/cat_image/'.$category->image)}}" height="20" width="20">
 
 
+/// laravel search with pagination///
+
+$categories = DB::table('categories as a')
+                          ->select('a.id as id','a.image as image','a.name as name','b.name as parent_cat','a.parent_id as parent_id')
+                          ->leftjoin('categories as b','a.parent_id', '=', 'b.id');
+                          if($request->keyword) 
+                          {
+                            $categories->where('a.name','like','%'.$request->keyword.'%');
+                          }
+         $categories = $categories->orderBy('id', 'DESC')->paginate(5);
+        
+                          
+        $data = ["categories" => $categories];
+        if($request->keyword) 
+          {
+            $data['keyword'] = $request->keyword;
+            $data['categories']->appends(['keyword' => $request->keyword]);
+          }
+
+/// laravel redirect ///
+
+return back();
+
+return back()->with('success_msg','Unit added');
+
+return redirect()->back()->with('message', 'IT WORKS!');
+
+return redirect()->route('admin.category_list')->with('message','Category has been deleted');
+
+return redirect('admin/home')->with('message','Category has been deleted');
 
 
+///laravel delete method ///
 
+<a onclick="event.preventDefault();
+ confirm('Are you sure you want to delete this unit?');
+ document.getElementById('delete-form-{{$unit->id}}').submit();">delete</a>
+<form id="delete-form-{{$unit->id}}" action="{{ route('unit.destroy',$unit->id) }}" method="POST" class="d-none">
+    @method('DELETE')
+    @csrf
+</form>
 
 
 
