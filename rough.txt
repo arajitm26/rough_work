@@ -194,6 +194,60 @@ return redirect('admin/home')->with('message','Category has been deleted');
 </form>
 
 
+/// laravel without middleware ///
+
+Route::post('/product/change_attribute',   'App\Http\Controllers\admin\ProductController@search_product_by_attribute')
+    ->withoutMiddleware([VerifyCsrfToken::class])->name('change_attribute');
+
+/// ajax form data ///
+
+ let form_data = $('#form').serialize();
+       let form_data = $('#form').serializeArray();    
+
+
+/// basic ajax ///
+ 
+  let form_data = $('#form').serialize();
+ $.ajax({
+         type : "post",
+         url : "https://example.com/api/submit",
+         data : form_data,
+         success : function(response)
+         {
+           console.log(response);
+         }
+       })       
+
+///javascript form serialize ///
+
+let form_data = $('#variable_product_form').serialize();
+
+///javascript new form data ///
+
+let form = $("#form");
+new FormData(form)
+
+$.ajax({
+         url: "ajaxupload.php",
+   type: "POST",
+   data:  new FormData(form),
+   contentType: false,
+         cache: false,
+   processData:false,
+   
+   success: function(data)
+      {
+    if(data=='invalid')
+    {
+     
+    },
+     error: function(e) 
+      {
+    $("#err").html(e).fadeIn();
+      }          
+    });
+
+
 
 
                   
