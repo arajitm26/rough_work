@@ -24,6 +24,14 @@ $categories = DB::table('categories as a')
 
 echo empty($address['street2']) ? 'empty' : 'not empty';
 
+/// laravel select with value ///
+
+<select name="type" class="form-control" required>
+    <option value="text" {{ old('type') == "text" ? "selected" : "" }}>Text</option>
+    <option value="number" {{ old('type') == "number" ? "selected" : "" }}>Number</option>
+    <option value="color" {{ old('type') == "color" ? "selected" : "" }}>Color</option>
+
+</select>
 
 /// laravel like search ///
 
@@ -185,9 +193,16 @@ return redirect('admin/home')->with('message','Category has been deleted');
 
 ///laravel delete method ///
 
-<a onclick="event.preventDefault();
- confirm('Are you sure you want to delete this unit?');
- document.getElementById('delete-form-{{$unit->id}}').submit();">delete</a>
+<a href="{{route('attribute.edit',$attribute->id)}}">edit</a>/<a onclick="event.preventDefault();
+if(confirm('Are you sure you want to delete this attribute?'))
+{
+document.getElementById('delete-form-{{$attribute->id}}').submit();
+}
+else
+{
+return;
+}
+">delete</a>
 <form id="delete-form-{{$unit->id}}" action="{{ route('unit.destroy',$unit->id) }}" method="POST" class="d-none">
     @method('DELETE')
     @csrf
@@ -202,7 +217,7 @@ Route::post('/product/change_attribute',   'App\Http\Controllers\admin\ProductCo
 /// ajax form data ///
 
  let form_data = $('#form').serialize();
-       let form_data = $('#form').serializeArray();    
+ let form_data = $('#form').serializeArray();    
 
 
 /// basic ajax ///
@@ -224,13 +239,12 @@ let form_data = $('#variable_product_form').serialize();
 
 ///javascript new form data ///
 
-let form = $("#form");
-new FormData(form)
+
 
 $.ajax({
          url: "ajaxupload.php",
    type: "POST",
-   data:  new FormData(form),
+   data:  new FormData(this),
    contentType: false,
          cache: false,
    processData:false,
@@ -247,7 +261,21 @@ $.ajax({
       }          
     });
 
+/// laravel json response///
+
+return response()->json(['status' => true,'message' => 'product list with pagination', 'data' => $data]);
+
+/// try catch ///
+
+try {
 
 
+} 
+catch (Exception $e) 
+{
+
+ return response()->json(['status' => false,'message' => 'internal error', 'data' => null],500);  
+
+}
 
                   
