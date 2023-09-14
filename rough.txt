@@ -278,4 +278,6 @@ catch (Exception $e)
 
 }
 
-                  
+/// laravel pagination in view ///
+
+{{ $products->links('admin.pagination') }}
