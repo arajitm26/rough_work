@@ -281,3 +281,17 @@ catch (Exception $e)
 /// laravel pagination in view ///
 
 {{ $products->links('admin.pagination') }}
+
+
+/// laravel auth ///
+
+composer require laravel/ui:*
+
+php artisan ui:auth (without css) / php artisan ui vue --auth (with css)
+
+npm install
+
+npm run build
+
+
+
