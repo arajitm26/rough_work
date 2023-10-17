@@ -293,5 +293,24 @@ npm install
 
 npm run build
 
+/// laravel success message and error message ///
+
+@if(session('success_msg'))
+<p><font color="green">{{session('success_msg')}}</font></p>
+@endif
+@foreach ($errors->all() as $message)
+<p><font color="red">{{$message}}</font></p>
+@endforeach
+
+
+<input id="title"
+    type="text"
+    name="title"
+    class="@error('title') is-invalid @enderror">
+ 
+@error('title')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
+
 
 
