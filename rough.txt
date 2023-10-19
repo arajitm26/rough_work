@@ -312,5 +312,9 @@ npm run build
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
 
+if ($errors->has('email')) {
+    // ...
+}
+
 
 
