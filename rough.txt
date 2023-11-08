@@ -316,5 +316,7 @@ if ($errors->has('email')) {
     // ...
 }
 
+/// jquery rdio checked value ///
 
+$('input[name="name_of_your_radiobutton"]:checked').val();
 
