@@ -320,3 +320,14 @@ if ($errors->has('email')) {
 
 $('input[name="name_of_your_radiobutton"]:checked').val();
 
+
+
+/// check curl response code ///
+
+$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if($http_code != "200")
+        {
+          return false;
+        }
+
