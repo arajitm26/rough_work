@@ -330,4 +330,11 @@ $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         {
           return false;
         }
+/// age calculate from year ///
+
+$from = new DateTime('1990-07-13');
+         $to   = new DateTime('today');
+         $age = $from->diff($to)->y;
+
+         echo $age;
 
