@@ -338,3 +338,11 @@ $from = new DateTime('1990-07-13');
 
          echo $age;
 
+// mysql password change for root user
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MySQL@2025!';
+FLUSH PRIVILEGES;
+
+
+SET GLOBAL validate_password.policy = LOW;         
+
